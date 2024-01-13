@@ -27,10 +27,6 @@ class_dict = {
     'Amenity': Amenity,
     'City': City
         }
-os.environ["HBNB_MYSQL_USER"] = "hbnb_dev"
-os.environ["HBNB_MYSQL_PWD"] = "hbnb_dev_pwd"
-os.environ["HBNB_MYSQL_HOST"] = "localhost"
-os.environ["HBNB_MYSQL_DB"] = "hbnb_dev_db"
 
 class DBStorage():
     __engine = None
@@ -44,10 +40,10 @@ class DBStorage():
         db = os.getenv("HBNB_MYSQL_DB")
         env = os.getenv("HBNB_ENV")
 
-        self.__engine = create_engine('msql+mysqldb://{}:{}@{}/{}'.format(user, passwd, host, db), pool_pre_ping=True)
+        self.__engine = create_engine('mysql+mysqldb://{}:{}@{}/{}'.format(user, passwd, host, db), pool_pre_ping=True)
 
         if env == "test":
-            Base.metadata.drop_all(engine)
+            Base.metadata.drop_all(self.__engine)
 
     def all(self, cls=None):
         """
@@ -65,7 +61,7 @@ class DBStorage():
                 objects[obj.__class__.__name__ + '.' + obj.id] = obj
         else:
             for cls in class_dict.values():
-                for obj in self.__session.query(obj):
+                for obj in self.__session.query(cls):
                     objects[obj.__class__.__name__ + '.' + obj.id] = obj
         return objects
 
