@@ -10,13 +10,14 @@ import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker, scoped_session
 from models.state import State
-from models.city import City
+#from models.city import City
 from models.amenity import Amenity
 from models.review import Review
 from models.user import User
 from models.base_model import Base
 from models.place import Place
 import os
+from models.city import City
 
 class_dict = {
     'User': User,
@@ -26,6 +27,10 @@ class_dict = {
     'Amenity': Amenity,
     'City': City
         }
+os.environ["HBNB_MYSQL_USER"] = "hbnb_dev"
+os.environ["HBNB_MYSQL_PWD"] = "hbnb_dev_pwd"
+os.environ["HBNB_MYSQL_HOST"] = "localhost"
+os.environ["HBNB_MYSQL_DB"] = "hbnb_dev_db"
 
 class DBStorage():
     __engine = None
@@ -33,13 +38,13 @@ class DBStorage():
 
     def __init__(self):
         """creates the driver engine for our database"""
-        user = os.getenvos.environ("HBNB_MYSQL_USER")
-        passwd = os.environ("HBNB_MYSQL_PWD")
-        host = os.environ("HBNB_MYSQL_HOST")
-        db = os.environ("HBNB_MYSQL_DB")
+        user = os.getenv("HBNB_MYSQL_USER")
+        passwd = os.getenv("HBNB_MYSQL_PWD")
+        host = os.getenv("HBNB_MYSQL_HOST")
+        db = os.getenv("HBNB_MYSQL_DB")
         env = os.getenv("HBNB_ENV")
 
-        self.__engine = create_engine('msql+mysqldb://://{}:{}@{}/{}'.format(user, passwd, host, db), pool_pre_ping=True)
+        self.__engine = create_engine('msql+mysqldb://{}:{}@{}/{}'.format(user, passwd, host, db), pool_pre_ping=True)
 
         if env == "test":
             Base.metadata.drop_all(engine)
@@ -82,7 +87,7 @@ class DBStorage():
         """delete from the current database session obj if not None
         """
         if obj:
-            self.__sessoin.delete(obj)
+            self.__session.delete(obj)
 
     def reload(self):
         """
