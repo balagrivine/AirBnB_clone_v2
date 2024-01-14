@@ -12,6 +12,7 @@ from models.state import State
 from models.city import City
 from models.amenity import Amenity
 from models.review import Review
+from models.base_model import BaseModel
 
 class HBNBCommand(cmd.Cmd):
     """ Contains the functionality for the HBNB console"""
@@ -134,7 +135,7 @@ class HBNBCommand(cmd.Cmd):
                 continue
             key = item[0]
             value = item[1]
-            value = self.check_value_type(value)
+            value = type(value)
             if value is None:
                 continue
             else:
