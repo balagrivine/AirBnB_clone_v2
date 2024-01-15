@@ -28,7 +28,7 @@ class_dict = {
     'City': City
         }
 
-class DBStorage(BaseModel, Base):
+class DBStorage():
     __engine = None
     __session = None
 
@@ -93,4 +93,5 @@ class DBStorage(BaseModel, Base):
         """
         Base.metadata.create_all(self.__engine)
         session = sessionmaker(bind=self.__engine, expire_on_commit=False)
-        self.__session = scoped_session(session)
+        scopedSession = scoped_session(session)
+        self.__session = scopedSession()
