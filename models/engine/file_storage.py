@@ -9,6 +9,7 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 import shlex
+import os
 
 
 class FileStorage:
@@ -20,6 +21,15 @@ class FileStorage:
     """
     __file_path = "file.json"
     __objects = {}
+    classes = {
+	"BaseModel": BaseModel,
+	"State": State,
+	"City": City,
+	"Amenity": Amenity,
+	"Place": Place,
+	"Review": Review,
+	"User": User
+    }
 
     def all(self, cls=None):
         """returns a dictionary
@@ -59,13 +69,12 @@ class FileStorage:
     def reload(self):
         """serialize the file path to JSON file path
         """
-        try:
+        if os.path.exists(self.__file_path):
             with open(self.__file_path, 'r', encoding="UTF-8") as f:
-                for key, value in (json.load(f)).items():
-                    value = eval(value["__class__"])(**value)
-                    self.__objects[key] = value
-        except FileNotFoundError:
-            pass
+                obj = json.load(f)
+                for key, value in obj.items():
+                    class_name, obj_id = key.split('.')
+                    self.__objects[key] = self.classes[class_name](**value)
 
     def delete(self, obj=None):
         """ delete an existing element
