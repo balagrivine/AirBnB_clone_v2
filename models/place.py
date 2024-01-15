@@ -4,8 +4,6 @@ from models.base_model import BaseModel, Base
 import sqlalchemy
 from sqlalchemy import Column, String, Integer, ForeignKey, Float
 from sqlalchemy.orm import relationship
-from models.user import User
-from models.city import City
 
 class Place(BaseModel, Base):
     """ A place to stay """
@@ -21,4 +19,6 @@ class Place(BaseModel, Base):
     price_by_night = Column(Integer, default=0, nullable=False)
     latitude = Column(Float, nullable=False)
     longitude = Column(Float, nullable=False)
+    user = relationship('User', back_populates='places')
+    cities = relationship('City', back_populates='places')
     amenity_ids = []
