@@ -14,7 +14,7 @@ from models.state import State
 from models.amenity import Amenity
 from models.review import Review
 from models.user import User
-from models.base_model import Base
+from models.base_model import Base, BaseModel
 from models.place import Place
 import os
 from models.city import City
@@ -28,7 +28,7 @@ class_dict = {
     'City': City
         }
 
-class DBStorage():
+class DBStorage(BaseModel, Base):
     __engine = None
     __session = None
 
