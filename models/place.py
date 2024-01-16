@@ -5,12 +5,11 @@ import sqlalchemy
 from sqlalchemy import Column, String, Integer, ForeignKey, Float, Table
 from sqlalchemy.orm import relationship
 from os import getenv
-from models.amenity import Amenity
 #from models import storage
-"""
+
 place_amenity = Table('place_amenity', Base.metadata, 
         Column('place_id', String(60), ForeignKey('places.id'), primary_key=True, nullable=False), 
-        Column('amenity_id', String(60), ForeignKey('amenities.id'), primary_key=True, nullable=False))"""
+        Column('amenity_id', String(60), ForeignKey('amenities.id'), primary_key=True, nullable=False))
 class Place(BaseModel, Base):
     """ A place to stay """
 
@@ -34,7 +33,7 @@ class Place(BaseModel, Base):
     if env == "db":
         reviews = relationship('Review', back_populates='place')
 
-        #amenities = relationship('Amenity', back_populates='place')
+        amenities = relationship('Amenity', back_populates='place_amenities', secondary=place_amenity, viewonly=False)
 
     else:
         @property
