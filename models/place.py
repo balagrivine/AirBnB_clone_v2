@@ -5,12 +5,12 @@ import sqlalchemy
 from sqlalchemy import Column, String, Integer, ForeignKey, Float, Table
 from sqlalchemy.orm import relationship
 from os import getenv
-#from models.amenity import Amenity
+from models.amenity import Amenity
 #from models import storage
-
+"""
 place_amenity = Table('place_amenity', Base.metadata, 
-        Column('place_id', String(60), ForeignKey('places.id'), primary_key=True), 
-        Column('amenity_id', String(60), ForeignKey('amenities.id'), primary_key=True, nullable=False))
+        Column('place_id', String(60), ForeignKey('places.id'), primary_key=True, nullable=False), 
+        Column('amenity_id', String(60), ForeignKey('amenities.id'), primary_key=True, nullable=False))"""
 class Place(BaseModel, Base):
     """ A place to stay """
 
@@ -34,7 +34,7 @@ class Place(BaseModel, Base):
     if env == "db":
         reviews = relationship('Review', back_populates='place')
 
-        amenities = relationship('Amenity', back_populates='place_amenities', secondary=place_amenity, viewonly=False)
+        #amenities = relationship('Amenity', back_populates='place')
 
     else:
         @property
@@ -56,7 +56,6 @@ class Place(BaseModel, Base):
             return [review for review in review_instances if review.place_id == self.id]
         @amenities.setter
         def amenities(self, obj):
-            from models.amenity import Amenity
             """Setter attribute amenities that handles append method for adding an Amenity.id to the attribute amenity_ids. This method should accept only Amenity object, otherwise, do nothing.
             """
             if isinstance(obj, Amenity):
