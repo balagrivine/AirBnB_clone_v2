@@ -10,8 +10,7 @@ from os import getenv
 
 place_amenity = Table('place_amenity', Base.metadata, 
         Column('place_id', String(60), ForeignKey('places.id'), primary_key=True), 
-        Column('amenity_id', String(60), ForeignKey('amenities.id'), primary_key=True, nullable=False)
-        )
+        Column('amenity_id', String(60), ForeignKey('amenities.id'), primary_key=True, nullable=False))
 class Place(BaseModel, Base):
     """ A place to stay """
 
@@ -55,7 +54,7 @@ class Place(BaseModel, Base):
             from models import storage
             review_instances = storage.all('Review').values()
             return [review for review in review_instances if review.place_id == self.id]
-        @amenity.setter
+        @amenities.setter
         def amenities(self, obj):
             from models.amenity import Amenity
             """Setter attribute amenities that handles append method for adding an Amenity.id to the attribute amenity_ids. This method should accept only Amenity object, otherwise, do nothing.
