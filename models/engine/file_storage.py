@@ -75,13 +75,13 @@ class FileStorage:
                 for key, value in obj.items():
                     class_name, obj_id = key.split('.')
                     self.__objects[key] = self.classes[class_name](**value)
-
-    def delete(self, obj=None):
-        """ delete an existing element
-        """
-        if obj:
-            key = "{}.{}".format(type(obj).__name__, obj.id)
-            del self.__objects[key]
+    def __init__(self):
+        def delete(self, obj=None):
+            """ delete an existing element
+            """
+            if obj:
+                key = "{}.{}".format(type(obj).__name__, obj.id)
+                del self.__objects[key]
 
     def close(self):
         """ calls reload()
