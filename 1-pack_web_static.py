@@ -12,6 +12,15 @@ Prototype: def do_pack():
 """
 
 from fabric.api import local
+from datetime import datetime
+import os
+
 def do_pack():
     #create versions folder if it doesn't exist
     local("mkdir -p versions")
+
+    time_format = "%Y%m%d%H%M%S"
+    archive_name = "web_static_().tgz".format(datetime.utcnow().strftime(time_format))
+    local("tar -cvzf versions/{} web_static".format(archive_name))
+
+    return os.path.join("versions", archive_name)
