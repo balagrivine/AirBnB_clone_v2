@@ -11,5 +11,7 @@ Prototype: def do_pack():
     The function do_pack must return the archive path if the archive has been correctly generated. Otherwise, it should return None
 """
 
+from fabric.api import local
 def do_pack():
-
+    #create versions folder if it doesn't exist
+    local("mkdir -p versions")
