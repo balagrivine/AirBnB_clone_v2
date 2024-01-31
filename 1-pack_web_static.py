@@ -20,7 +20,10 @@ def do_pack():
     local("mkdir -p versions")
 
     time_format = "%Y%m%d%H%M%S"
-    archive_name = "web_static_().tgz".format(datetime.utcnow().strftime(time_format))
-    local("tar -cvzf versions/{} web_static".format(archive_name))
+    archive_name = "versions/web_static_().tgz".format(datetime.now().strftime(time_format))
+    archived = local("tar -cvzf {} web_static".format(archive_name))
 
-    return os.path.join("versions", archive_name)
+    if archived.return_code != 0:
+        return None
+    else:
+        return archive_name
