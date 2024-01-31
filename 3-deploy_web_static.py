@@ -50,3 +50,13 @@ def do_deploy(archive_path):
         run("ln -s {} /data/web_static/current".format(f_path))
         return True
     return False
+
+def deploy():
+    """Fabric script (based on the file 2-do_deploy_web_static.py) that creates and distributes an archive to your web servers, using the function deploy:"""
+
+    archive = do_pack()
+    if not archive:
+        return False
+
+    value = do_deploy(archive)
+    return value
