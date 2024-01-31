@@ -24,13 +24,7 @@ ln -sf /data/web_static/releases/test/ /data/web_static/current
 chown -R ubuntu:ubuntu /data/
 
 #configure nginx server to serve content
-block =  "server {
-		location /hbnb_static {
-		alias /data/web_static/current/
-	}
-}"
-
-echo "$block" | sudo tee /etc/nginx/sites-available/default
+sudo sed -i "26i \\\tlocation /hbnb_static/ {\n\t\talias /data/web_static/current/;\n\t}\n" /etc/nginx/sites-available/default
 
 #restart nginx server
 sudo service nginx restart
