@@ -27,3 +27,18 @@ def do_pack():
         return None
     else:
         return archive_name
+
+def do_deploy(archive_path):
+    """Write a Fabric script (based on the file 1-pack_web_static.py) that distributes an archive to your web servers, using the function do_deploy:"""
+
+    #return false if the archive paht does not exist
+    if archive_path == None:
+        return False
+
+    env.user = ("ubuntu")
+    env.host = ["ubuntu@52"]
+
+    put("archive_path", /tmp/)
+    run("rm archive_path")
+    run("rm -rf /data/web_static/current")
+    run("ln -s /data/web_static/current /data/web_static/releases/<archive filename without extension>")
