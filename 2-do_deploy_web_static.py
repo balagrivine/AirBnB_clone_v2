@@ -15,6 +15,9 @@ from fabric.api import local
 from datetime import datetime
 import os
 
+env.user = "ubuntu"
+env.hosts = [""]
+
 def do_pack():
     #create versions folder if it doesn't exist
     local("mkdir -p versions")
@@ -32,13 +35,18 @@ def do_deploy(archive_path):
     """Write a Fabric script (based on the file 1-pack_web_static.py) that distributes an archive to your web servers, using the function do_deploy:"""
 
     #return false if the archive paht does not exist
-    if archive_path == None:
-        return False
+    if os.path.exists(archive_path):
+        archive = archive_path.split('/')[1]
+        a_path = "/tmp/{}".format(archive)
+        folder = archive.split('.')[0]
+        f_path = "/data/web_static/releases/{}/".format(folder)
 
-    env.user = ("ubuntu")
-    env.host = ["ubuntu@52"]
-
-    put("archive_path", /tmp/)
-    run("rm archive_path")
-    run("rm -rf /data/web_static/current")
-    run("ln -s /data/web_static/current /data/web_static/releases/<archive filename without extension>")
+        put(archive_path, a_path)
+        run("mkdir -p {}".format(f_path))
+        run("tar -xzf {} -C {}".format(a_path, f_path))
+        run("rm {}".format()a_path)
+        run("rm -rf {}web_static".format(f_path))
+        run("rm -rf /data/web_static/current")
+        run("ln -s {} /data/web_static/current".format(f_path))
+        return True
+    return False
