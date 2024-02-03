@@ -16,7 +16,7 @@ from datetime import datetime
 import os
 
 def do_pack():
-    #create versions folder if it doesn't exist
+    """create versions folder if it doesn't exist"""
     local("sudo mkdir -p versions")
 
     time_format = "%Y%m%d%H%M%S"
