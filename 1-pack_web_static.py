@@ -17,13 +17,13 @@ import os
 
 def do_pack():
     #create versions folder if it doesn't exist
-    local("mkdir -p versions")
+    local("sudo mkdir -p versions")
 
     time_format = "%Y%m%d%H%M%S"
     archive_name = "versions/web_static_().tgz".format(datetime.now().strftime(time_format))
-    archived = local("tar -cvzf {} web_static".format(archive_name))
+    archived = local("sudo tar -cvzf {} web_static".format(archive_name))
 
-    if archived.return_code != 0:
-        return None
+    if archived.succeeded:
+        return archived_name
     else:
-        return archive_name
+        return None
