@@ -19,5 +19,11 @@ def hello():
     """Function to call for the / page"""
     return "Hello HBNB!"
 
+#define function to be called for the page /hbnb
+@app.route("/hbnb", strict_slashes=False)
+def hbnb():
+    """Function to be called for the page /hbnb"""
+    return "HBNB"
+
 if __name__ == "__main__":
     app.run(port=5000, host='0.0.0.0')
