@@ -16,10 +16,10 @@ class State(BaseModel, Base):
         """public getter method cities to return the list of City objects from storage linked to the current State
         """
 
-        form models import storage
+        from models import storage
         related_cities = []
-        cities = storage..all(city)
+        cities = storage.all(city)
         for city in cities.values():
             if city.state_id == self.id:
-                related_cities.appent(city)
+                related_cities.append(city)
         return related_cities
