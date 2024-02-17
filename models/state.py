@@ -12,7 +12,7 @@ class State(BaseModel, Base):
     cities = relationship("City", back_populates='state')
 
     @property
-    def class(self):
+    def cities(self):
         """public getter method cities to return the list of City objects from storage linked to the current State
         """
 
