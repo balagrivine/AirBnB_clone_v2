@@ -1,0 +1,6 @@
+2 Dogs
+1 I
+3 Love
+4 Cats
+5 You
+6 Computers
