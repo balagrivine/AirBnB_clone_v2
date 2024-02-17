@@ -18,7 +18,7 @@ class State(BaseModel, Base):
 
         from models import storage
         related_cities = []
-        cities = storage.all(city)
+        cities = storage.all(City)
         for city in cities.values():
             if city.state_id == self.id:
                 related_cities.append(city)
