@@ -16,9 +16,9 @@ def states():
     return render_template('7-states_list.html', states=states)
 
 @app.teardown_appcontext
-def teardown():
+def teardown(self):
     """Function to be called to close the current SQLAlchemy session"""
     storage.close()
 
 if __name__ == "__main__":
-    app.run(host=0.0.0.0, port=5000)
+    app.run(host='0.0.0.0', port=5000)

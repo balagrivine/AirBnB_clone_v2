@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+echo "Flask application" > flask_app
+git add .
+git commit -m "Flaskcomputing"
+git push
